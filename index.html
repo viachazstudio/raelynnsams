@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raelyn Sams · Player Profile · Game Ready Labs</title>
+<meta name="description" content="Raelyn Sams — Guard, Class of 2034. Michigan Dream AAU. Davison, Michigan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+a{color:inherit;text-decoration:none}
+:root{--bg:#FFFFFF;--bg-mid:#F6F6F4;--bg-light:#EFEFED;--black:#0A0A0A;--gray:#666666;--gray-light:#999999;--rule:rgba(0,0,0,0.09)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--black);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(255,255,255,0.96);border-bottom:1px solid var(--rule);backdrop-filter:blur(8px)}
+.nav-brand{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;color:var(--black);text-transform:uppercase}
+.nav-tag{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;color:var(--gray-light);text-transform:uppercase}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:52% 48%}
+.hero-photo{overflow:hidden}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.hero-card{background:#0A0A0A;display:flex;flex-direction:column;justify-content:center;padding:8rem 3.5rem 5rem}
+.player-eyebrow{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.28em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.player-eyebrow::before{content:'';display:block;width:20px;height:1px;background:rgba(255,255,255,0.25)}
+.player-name{font-family:'Barlow Semi Condensed',sans-serif;font-size:clamp(3.5rem,6vw,6rem);font-weight:800;letter-spacing:-0.01em;color:#FFFFFF;line-height:0.88;margin-bottom:2rem}
+.card-stats{width:100%;margin-bottom:2rem;border-top:1px solid rgba(255,255,255,0.12);border-left:1px solid rgba(255,255,255,0.12)}
+.card-stats-row{display:grid;grid-template-columns:repeat(3,1fr)}
+.card-stat{padding:1.25rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,0.12);border-bottom:1px solid rgba(255,255,255,0.12)}
+.card-stat-val{font-family:'Barlow Semi Condensed',sans-serif;font-size:2rem;font-weight:800;color:#FFFFFF;display:block;line-height:1;margin-bottom:0.25rem}
+.card-stat-label{font-family:'DM Mono',monospace;font-size:0.42rem;letter-spacing:0.22em;color:rgba(255,255,255,0.35);text-transform:uppercase}
+.card-contact{padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1)}
+.card-contact-label{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.22em;color:rgba(255,255,255,0.28);text-transform:uppercase;margin-bottom:0.4rem}
+.card-contact-value{font-size:0.85rem;color:#FFFFFF}
+.card-contact-value a{border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:0.1rem}
+.card-contact-mgr{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.12em;color:rgba(255,255,255,0.28);margin-top:0.4rem}
+
+/* MOBILE INLINE PHOTO */
+.card-inline-photo{display:none;overflow:hidden;margin-bottom:1.5rem}
+.card-inline-photo img{width:100%;display:block;height:72vw;object-fit:cover;object-position:center 8%}
+
+/* SHARED */
+.section{padding:6rem 3rem;max-width:1140px;margin:0 auto}
+.sec-label{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.28em;color:var(--black);text-transform:uppercase;margin-bottom:3rem;display:flex;align-items:center;gap:1rem}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.09)}
+
+/* PROFILE */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.profile-headline{font-family:'Barlow Semi Condensed',sans-serif;font-size:clamp(2.2rem,3.5vw,3.4rem);font-weight:700;line-height:1;color:var(--black);margin-bottom:1.25rem}
+.profile-headline em{font-style:italic}
+.profile-body{font-size:0.9rem;color:var(--gray);line-height:1.9;margin-bottom:2rem}
+.profile-body p+p{margin-top:0.9rem}
+.stats-module{border:1px solid var(--rule)}
+.stats-module-label{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gray-light);padding:0.75rem 1.25rem;border-bottom:1px solid var(--rule)}
+.stats-module-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.stat-cell{padding:1.25rem 0.75rem;text-align:center;border-right:1px solid var(--rule)}
+.stat-cell:last-child{border-right:none}
+.stat-num{font-family:'Barlow Semi Condensed',sans-serif;font-size:1.6rem;font-weight:800;color:var(--black);line-height:1;display:block;margin-bottom:0.2rem}
+.stat-key{font-family:'DM Mono',monospace;font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light)}
+.measurables{display:flex;flex-direction:column}
+.measurable-row{display:flex;justify-content:space-between;align-items:baseline;padding:0.85rem 0;border-bottom:1px solid var(--rule)}
+.measurable-row:first-child{border-top:1px solid var(--rule)}
+.measurable-key{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.14em;color:var(--gray-light);text-transform:uppercase}
+.measurable-val{font-size:0.88rem;color:var(--black)}
+.placeholder{color:var(--gray-light)}
+
+/* HONORS */
+.honors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)}
+.honor-card{background:var(--bg);padding:2rem 1.75rem}
+.placeholder-card{background:var(--bg-mid);opacity:0.45}
+.honor-year{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.18em;color:var(--gray-light);text-transform:uppercase;margin-bottom:0.75rem}
+.honor-title{font-family:'Barlow Semi Condensed',sans-serif;font-size:1.2rem;font-weight:700;color:var(--black);margin-bottom:0.25rem}
+.honor-org{font-size:0.78rem;color:var(--gray)}
+
+/* HIGHLIGHT TAPE */
+.tape-section{padding:6rem 3rem;max-width:1140px;margin:0 auto}
+.tape-embed{position:relative;width:100%;padding-bottom:56.25%;background:#0A0A0A}
+.tape-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+/* MOMENTS — single lead image + overlay */
+.moments-wrap{padding:0 3rem 6rem;max-width:1140px;margin:0 auto}
+.moments-lead{position:relative;overflow:hidden;cursor:pointer;background:var(--bg-light)}
+.moments-lead img{width:100%;display:block;max-height:580px;object-fit:cover;object-position:center 25%;transition:opacity 0.3s}
+.moments-lead:hover img{opacity:0.92}
+.moments-action{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--rule)}
+.moments-action-text{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--black);cursor:pointer}
+.moments-action-count{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.14em;color:var(--gray-light)}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(10,10,10,0.96);align-items:center;justify-content:center}
+.overlay.active{display:flex}
+.overlay-img{max-height:88vh;max-width:88vw;object-fit:contain;display:block;user-select:none}
+.overlay-index{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase}
+.overlay-close{position:absolute;top:2rem;right:2rem;font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.45);cursor:pointer;background:none;border:none;transition:color 0.2s}
+.overlay-close:hover{color:#FFFFFF}
+.overlay-prev,.overlay-next{position:absolute;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);cursor:pointer;background:none;border:none;padding:1rem;transition:color 0.2s;user-select:none}
+.overlay-prev:hover,.overlay-next:hover{color:#FFFFFF}
+.overlay-prev{left:2rem}
+.overlay-next{right:2rem}
+
+/* GOALS */
+.goals-block{background:var(--bg-mid);border-top:1px solid var(--rule);padding:5rem 3rem}
+.goals-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:120px 1fr;gap:3rem;align-items:start}
+.goals-number{font-family:'Barlow Semi Condensed',sans-serif;font-size:5rem;font-weight:900;color:rgba(0,0,0,0.06);line-height:1}
+.goals-headline{font-family:'Barlow Semi Condensed',sans-serif;font-size:1.8rem;font-weight:700;color:var(--black);margin-bottom:0.75rem}
+.goals-body{font-size:0.9rem;color:var(--gray);line-height:1.9;max-width:580px}
+
+/* RECRUITING */
+.recruiting-section{padding:7rem 3rem;background:var(--bg)}
+.recruiting-inner{max-width:1140px;margin:0 auto}
+.rec-programs{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);margin-top:3rem}
+.rec-card{background:var(--bg-mid);padding:2rem 1.75rem;display:flex;align-items:flex-start;gap:1.25rem}
+.rec-logo{width:44px;height:44px;background:rgba(0,0,0,0.05);border-radius:50%;flex-shrink:0}
+.rec-info{display:flex;flex-direction:column;gap:0.3rem}
+.rec-name{font-family:'Barlow Semi Condensed',sans-serif;font-size:1rem;font-weight:700;color:rgba(0,0,0,0.18);letter-spacing:0.04em}
+.rec-when{font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,0,0,0.14)}
+.rec-note{margin-top:2rem;font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.14em;color:var(--gray-light)}
+
+/* CONTACT */
+.contact-section{background:#0A0A0A;padding:9rem 3rem}
+.contact-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.contact-eyebrow{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.28em;color:rgba(255,255,255,0.28);text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem}
+.contact-eyebrow::before{content:'';display:block;width:20px;height:1px;background:rgba(255,255,255,0.22)}
+.contact-headline{font-family:'Barlow Semi Condensed',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;color:#FFFFFF;line-height:0.9;margin-bottom:1.5rem;letter-spacing:-0.01em}
+.contact-cta{display:inline-block;font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;background:#FFFFFF;color:#0A0A0A;padding:1rem 2.2rem;margin-top:1.75rem;transition:opacity 0.2s}
+.contact-cta:hover{opacity:0.85}
+.contact-stack{display:flex;flex-direction:column;gap:2rem}
+.cstack-item{}
+.cstack-label{font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.22em;color:rgba(255,255,255,0.28);text-transform:uppercase;margin-bottom:0.3rem}
+.cstack-value{font-size:0.9rem;color:#FFFFFF}
+.cstack-value a{border-bottom:1px solid rgba(255,255,255,0.18);padding-bottom:0.1rem}
+
+footer{padding:1.75rem 3rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-family:'DM Mono',monospace;font-size:0.54rem;letter-spacing:0.18em;color:var(--gray);text-transform:uppercase}
+.footer-copy{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.12em;color:rgba(0,0,0,0.3)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-photo{display:none}
+  .card-inline-photo{display:block}
+  .hero-card{padding:5rem 1.5rem 4rem}
+  .player-name{font-size:3.5rem}
+  .profile-grid{grid-template-columns:1fr;gap:3rem}
+  .stats-module-grid{grid-template-columns:repeat(5,1fr)}
+  .stat-num{font-size:1.1rem}
+  .honors-grid{grid-template-columns:1fr}
+  .tape-section{padding:4rem 1.5rem}
+  .moments-wrap{padding:0 1.5rem 4rem}
+  .rec-programs{grid-template-columns:1fr}
+  .goals-block{padding:4rem 1.5rem}
+  .goals-inner{grid-template-columns:1fr;gap:1rem}
+  .goals-number{display:none}
+  .section{padding:4rem 1.5rem}
+  .recruiting-section{padding:5rem 1.5rem}
+  .contact-section{padding:5rem 1.5rem}
+  .contact-inner{grid-template-columns:1fr;gap:3.5rem}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;padding:1.5rem}
+  .overlay-prev{left:0.75rem}
+  .overlay-next{right:0.75rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="https://gamereadylabs.com" class="nav-brand">Game Ready Labs</a>
+  <span class="nav-tag">Player Profile</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-photo">
+    <img src="assets/images/raelyn.jpeg" alt="Raelyn Sams">
+  </div>
+  <div class="hero-card">
+    <div class="player-eyebrow">Michigan Dream · Guard · Davison</div>
+    <h1 class="player-name">Raelyn<br>Sams</h1>
+    <div class="card-inline-photo">
+      <img src="assets/images/raelyn.jpeg" alt="Raelyn Sams">
+    </div>
+    <div class="card-stats">
+      <div class="card-stats-row">
+        <div class="card-stat"><span class="card-stat-val">10</span><span class="card-stat-label">PPG</span></div>
+        <div class="card-stat"><span class="card-stat-val">5</span><span class="card-stat-label">RPG</span></div>
+        <div class="card-stat"><span class="card-stat-val">4</span><span class="card-stat-label">APG</span></div>
+      </div>
+      <div class="card-stats-row">
+        <div class="card-stat"><span class="card-stat-val">3</span><span class="card-stat-label">SPG</span></div>
+        <div class="card-stat"><span class="card-stat-val">0.5</span><span class="card-stat-label">BPG</span></div>
+        <div class="card-stat"><span class="card-stat-val">2034</span><span class="card-stat-label">Class</span></div>
+      </div>
+    </div>
+    <div class="card-contact">
+      <div class="card-contact-label">Recruiting Contact</div>
+      <div class="card-contact-value"><a href="mailto:wmsams311@gmail.com">wmsams311@gmail.com</a></div>
+      <div class="card-contact-mgr"><a href="https://coachsams.com" target="_blank" style="color:rgba(255,255,255,0.28);border-bottom:1px solid rgba(255,255,255,0.12)">Managed by William Sams</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- THE PLAYER -->
+<div class="section">
+  <div class="sec-label">The Player</div>
+  <div class="profile-grid">
+    <div>
+      <h2 class="profile-headline">Built for<br><em>the long game.</em></h2>
+      <div class="profile-body">
+        <p>Composed on the floor. Attentive. Consistently in the right position. The kind of player coaches notice before they can explain why.</p>
+        <p>This is the beginning of the record.</p>
+      </div>
+      <div class="stats-module">
+        <div class="stats-module-label">2025–26 Season Averages</div>
+        <div class="stats-module-grid">
+          <div class="stat-cell"><span class="stat-num">10.0</span><span class="stat-key">PPG</span></div>
+          <div class="stat-cell"><span class="stat-num">5.0</span><span class="stat-key">RPG</span></div>
+          <div class="stat-cell"><span class="stat-num">4.0</span><span class="stat-key">APG</span></div>
+          <div class="stat-cell"><span class="stat-num">3.0</span><span class="stat-key">SPG</span></div>
+          <div class="stat-cell"><span class="stat-num">0.5</span><span class="stat-key">BPG</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="measurables">
+      <div class="measurable-row"><span class="measurable-key">Position</span><span class="measurable-val">Guard</span></div>
+      <div class="measurable-row"><span class="measurable-key">Class Year</span><span class="measurable-val">2034</span></div>
+      <div class="measurable-row"><span class="measurable-key">School</span><span class="measurable-val">Davison</span></div>
+      <div class="measurable-row"><span class="measurable-key">AAU Program</span><span class="measurable-val">Michigan Dream</span></div>
+      <div class="measurable-row"><span class="measurable-key">Date of Birth</span><span class="measurable-val">March 11, 2016</span></div>
+      <div class="measurable-row"><span class="measurable-key">Height</span><span class="measurable-val">5'1"</span></div>
+      <div class="measurable-row"><span class="measurable-key">Weight</span><span class="measurable-val">95 lbs</span></div>
+      <div class="measurable-row"><span class="measurable-key">GPA</span><span class="measurable-val placeholder">tbd</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- HONORS -->
+<div class="section" style="padding-top:0">
+  <div class="sec-label">Honors & Achievements</div>
+  <div class="honors-grid">
+    <div class="honor-card">
+      <div class="honor-year">March 2026</div>
+      <div class="honor-title">Star of the Month</div>
+      <div class="honor-org">Siple Elementary School</div>
+    </div>
+    <div class="honor-card placeholder-card">
+      <div class="honor-year">2025 – 2026</div>
+      <div class="honor-title">Achievement coming</div>
+      <div class="honor-org">Michigan Dream</div>
+    </div>
+    <div class="honor-card placeholder-card">
+      <div class="honor-year">2025 – 2026</div>
+      <div class="honor-title">Achievement coming</div>
+      <div class="honor-org">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- HIGHLIGHT TAPE -->
+<div class="tape-section">
+  <div class="sec-label">Highlight Tape</div>
+  <div class="tape-embed">
+    <iframe src="https://www.youtube.com/embed/mbEqrEKy0RM" title="Raelyn Sams Highlight Tape" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- MOMENTS -->
+<div class="moments-wrap">
+  <div class="sec-label">Moments</div>
+  <div class="moments-lead" onclick="openOverlay(0)">
+    <img src="assets/images/ball.jpeg" alt="Raelyn Sams" style="object-position:center top">
+  </div>
+  <div class="moments-action">
+    <span class="moments-action-text" onclick="openOverlay(0)">Open Archive →</span>
+    <span class="moments-action-count">5 frames</span>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <button class="overlay-close" onclick="closeOverlay()">Close</button>
+  <button class="overlay-prev" onclick="prevImg(event)">←</button>
+  <img class="overlay-img" id="overlay-img" src="" alt="">
+  <button class="overlay-next" onclick="nextImg(event)">→</button>
+  <div class="overlay-index" id="overlay-index"></div>
+</div>
+
+<!-- GOALS -->
+<div class="goals-block">
+  <div class="goals-inner">
+    <div class="goals-number">01</div>
+    <div>
+      <div class="goals-headline">Next step</div>
+      <p class="goals-body">Fundamentals and competitive habits. The goal is to be ready before anyone expects her to be.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RECRUITING -->
+<div class="recruiting-section">
+  <div class="recruiting-inner">
+    <div class="sec-label">Recruiting</div>
+    <div class="rec-programs">
+      <div class="rec-card">
+        <div class="rec-logo"></div>
+        <div class="rec-info">
+          <div class="rec-name">— — — — — — — —</div>
+          <div class="rec-when">Target · Class of 2034</div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-logo"></div>
+        <div class="rec-info">
+          <div class="rec-name">— — — — — — — —</div>
+          <div class="rec-when">Target · Class of 2034</div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-logo"></div>
+        <div class="rec-info">
+          <div class="rec-name">— — — — — — — —</div>
+          <div class="rec-when">Target · Class of 2034</div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-logo"></div>
+        <div class="rec-info">
+          <div class="rec-name">— — — — — — — —</div>
+          <div class="rec-when">Target · Class of 2034</div>
+        </div>
+      </div>
+    </div>
+    <div class="rec-note">Target programs will appear here as the process begins. Class of 2034.</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <div class="contact-eyebrow">Recruiting Inquiries</div>
+      <h2 class="contact-headline">Get in<br>touch.</h2>
+      <a href="mailto:wmsams311@gmail.com" class="contact-cta">Contact About Raelyn →</a>
+    </div>
+    <div class="contact-stack">
+      <div class="cstack-item">
+        <div class="cstack-label">Recruiting Contact</div>
+        <div class="cstack-value"><a href="mailto:wmsams311@gmail.com">wmsams311@gmail.com</a></div>
+      </div>
+      <div class="cstack-item">
+        <div class="cstack-label">Managed By</div>
+        <div class="cstack-value"><a href="https://coachsams.com" target="_blank">William Sams</a></div>
+      </div>
+      <div class="cstack-item">
+        <div class="cstack-label">Program</div>
+        <div class="cstack-value">Michigan Dream AAU</div>
+      </div>
+      <div class="cstack-item">
+        <div class="cstack-label">Location</div>
+        <div class="cstack-value">Davison, Michigan</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="https://gamereadylabs.com" class="footer-brand">Game Ready Labs · gamereadylabs.com</a>
+  <span class="footer-copy">© 2026 · Managed by <a href="https://coachsams.com" target="_blank" style="color:rgba(0,0,0,0.3)">William Sams</a> · <a href="https://kissingfrowns.com" style="color:rgba(0,0,0,0.3)">a kissing frowns studio</a></span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.style.boxShadow = window.scrollY > 40 ? '0 1px 0 rgba(0,0,0,0.08)' : 'none';
+});
+
+const images = [
+  { src: 'assets/images/ball.jpeg',          alt: 'Raelyn Sams on court' },
+  { src: 'assets/images/teammate.png',       alt: 'Raelyn Sams at practice' },
+  { src: 'assets/images/raelyn.jpeg',        alt: 'Raelyn Sams' },
+  { src: 'assets/images/william-raelyn.png', alt: 'Raelyn Sams with Coach Sams' },
+  { src: 'assets/images/academia.jpeg',      alt: 'Star of the Month' },
+];
+
+let current = 0;
+const overlay   = document.getElementById('overlay');
+const oImg      = document.getElementById('overlay-img');
+const oIndex    = document.getElementById('overlay-index');
+
+function openOverlay(i) {
+  current = i;
+  showImg();
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOverlay() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function showImg() {
+  oImg.src = images[current].src;
+  oImg.alt = images[current].alt;
+  oIndex.textContent = `0${current + 1} / 0${images.length}`;
+}
+
+function prevImg(e) { e.stopPropagation(); current = (current - 1 + images.length) % images.length; showImg(); }
+function nextImg(e) { e.stopPropagation(); current = (current + 1) % images.length; showImg(); }
+
+function handleOverlayClick(e) {
+  if (e.target === overlay) closeOverlay();
+}
+
+document.addEventListener('keydown', e => {
+  if (!overlay.classList.contains('active')) return;
+  if (e.key === 'Escape') closeOverlay();
+  if (e.key === 'ArrowLeft')  { current = (current - 1 + images.length) % images.length; showImg(); }
+  if (e.key === 'ArrowRight') { current = (current + 1) % images.length; showImg(); }
+});
+
+// Touch swipe
+let tx = 0;
+overlay.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+overlay.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) < 40) return;
+  if (dx < 0) { current = (current + 1) % images.length; }
+  else        { current = (current - 1 + images.length) % images.length; }
+  showImg();
+});
+</script>
+</body>
+</html>
